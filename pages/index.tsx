@@ -1,15 +1,19 @@
-import Link from 'next/link'
-import Layout from '../components/Layout'
+import fetcher from '@lib/fetch'
+import useSWR from 'swr'
 
-const IndexPage = () => (
-  <Layout title="Home | Next.js + TypeScript Example">
-    <h1>Hello Next.js 👋</h1>
-    <p>
-      <Link href="/about">
-        <a>About</a>
-      </Link>
-    </p>
-  </Layout>
-)
+const IndexPage = () => {
+  const { data, error } = useSWR(
+    `{
+      Asvs {
+        chapterName
+      }
+    }`,
+    fetcher
+  )
+  console.log(data, "data asvs", error);
+  return (
+    <p>Hello</p>
+  )
+}
 
 export default IndexPage
