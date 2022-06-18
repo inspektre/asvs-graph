@@ -1,5 +1,5 @@
 {
-  "private": true,
+  "private": false,
   "scripts": {
     "dev": "next",
     "build": "next build",
@@ -53,5 +53,5 @@
     "semi": false,
     "singleQuote": true
   },
-  "version": "0.0.0"
+  "version": "0.0.1"
 }
