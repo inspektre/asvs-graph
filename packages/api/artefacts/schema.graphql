@@ -1,0 +1,43 @@
+type Asvs {
+  ID: ID! @id(autogenerate: true)
+  chapterId: String!
+  chapterName: String!
+  sectionId: String!
+  sectionName: String!
+  requirementId: String!
+  description: String!
+  level1: Boolean!
+  level2: Boolean!
+  level3: Boolean!
+  cweId: Int
+  nistId: String
+  createdAt: DateTime @timestamp(operations: [CREATE])
+  updatedAt: DateTime @timestamp
+  cweAvs: [Asvs!]! @relationship(type: "RELATED_CWE", direction: OUT)
+  nistAsvs: [Asvs!]! @relationship(type: "RELATED_NIST", direction: OUT)
+}
+
+type Mutation {
+  performSeed: Boolean!
+  removeSeed: String @cypher(statement: """ MATCH (n) DETACH DELETE n; """)
+  setCWEGraph: String @cypher(statement: 
+    """
+      MATCH (a1:Asvs), (a2:Asvs) WHERE NOT(a1.ID=a2.ID) AND a1.cweId=a2.cweId AND NOT(a1.cweId=0) MERGE (a1)-[:RELATED_CWE]-(a2);
+    """
+  )
+  setNistGraph: String @cypher(statement: 
+    """
+      MATCH (a1:Asvs), (a2:Asvs) WHERE NOT(a1.ID=a2.ID) AND a1.nistId=a2.nistId MERGE (a1)-[:RELATED_NIST]-(a2);
+    """
+  )
+  setChapterGraph: String @cypher(statement:
+    """
+      MATCH (a1:Asvs), (a2:Asvs) WHERE NOT(a1.ID=a2.ID) AND a1.chapterName=a2.chapterName MERGE (a1)-[:RELATED_CHAPTER]-(a2);
+    """
+  )
+  setSectionGraph: String @cypher(statement:
+    """
+      MATCH (a1:Asvs), (a2:Asvs) WHERE NOT(a1.ID=a2.ID) AND a1.sectionName=a2.sectionName MERGE (a1)-[:RELATED_SECTION]-(a2);
+    """
+  )
+}

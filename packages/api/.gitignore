@@ -1,0 +1,7 @@
+artefacts/inspektre-api
+artefacts/inspektre-api-macos
+node_modules/
+yarn.lock
+dist/
+artefacts.zip
+.env
