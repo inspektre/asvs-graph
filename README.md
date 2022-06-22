@@ -1,5 +1,4 @@
-# Cert
-sudo certbot certonly --nginx --agree-tos -m contact@inspektre.io -d sydney.inspektre.com --preferred-challenges dns
+
 
 # ASVS Version 4.0.3
 
