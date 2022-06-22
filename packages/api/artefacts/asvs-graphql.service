@@ -1,0 +1,20 @@
+[Unit]
+Description=Inspektre_ASVS_Service
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/etc/neo4j/
+ExecStart=/usr/bin/asvs-graphql
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=asvs-graphql
+User=neo4j
+Group=adm
+Environment=PATH=/usr/bin
+
+
+[Install]
+WantedBy=multi-user.target
